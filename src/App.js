@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Items from './components/Items';
 
-function App() {
+const App = () => {
+  const [items, setItems] = useState();
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    setItems([
+      { id: 1, title: 'Стул ', price: '49.99', img: 'stul.jpg' },
+      { id: 2, title: 'Диван', price: '149.99', img: 'divan.jpg' },
+      {
+        id: 7,
+        title: 'Массажное кресло',
+        price: '199.99',
+        img: 'massage_kreslo.jpg',
+      },
+      { id: 8, title: 'Кровать', price: '109.99', img: 'krovat.jpg' },
+    ]);
+  }, []);
+
+  const addToOrder = (item) => {
+    let isInArray = false;
+    orders.forEach((el) => {
+      if (el.id === item.id) {
+        isInArray = true;
+      }
+    });
+    if (!isInArray) {
+      setOrders([...orders, item]);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <Header orders={orders} />
+      <Items items={items} onAdd={addToOrder} />
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;

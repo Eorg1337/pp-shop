@@ -130,6 +130,30 @@ header .shop_cart .item p {
   font-weight: 600;
 }
 
+header .shop_cart .item .delete_item {
+  color: #ca5252;
+  float: right;
+  position: relative;
+  top: -15px;
+  cursor: pointer;
+  transition:
+    color,
+    transform 500ms ease;
+}
+
+header .shop_cart .item .delete_item:hover {
+  color: rgb(222, 33, 33);
+  transform: scale(1.5);
+}
+
+header .shop_cart .sum_cost {
+  float: left;
+  font-size: 20px;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
 main {
   display: flex;
   width: 100%;

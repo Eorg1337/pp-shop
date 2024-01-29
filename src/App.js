@@ -32,9 +32,13 @@ const App = () => {
     }
   };
 
+  const deleteOrder = (id) => {
+    setOrders(orders.filter((el) => el.id !== id));
+  };
+
   return (
     <div className="wrapper">
-      <Header orders={orders} />
+      <Header orders={orders} onDelete={deleteOrder} />
       <Items items={items} onAdd={addToOrder} />
       <Footer />
     </div>

@@ -2,22 +2,46 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Items from './components/Items';
+import Categories from './components/Categories';
 
 const App = () => {
   const [items, setItems] = useState();
   const [orders, setOrders] = useState([]);
+  const [curItems, setCurItems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   useEffect(() => {
-    setItems([
-      { id: 1, title: 'Стул ', price: '49.99', img: 'stul.jpg' },
-      { id: 2, title: 'Диван', price: '149.99', img: 'divan.jpg' },
+    const initialItems = [
+      {
+        id: 1,
+        title: 'Стул',
+        price: '49.99',
+        img: 'stul.jpg',
+        category: 'chairs',
+      },
+      {
+        id: 2,
+        title: 'Диван',
+        price: '149.99',
+        img: 'divan.jpg',
+        category: 'sofa',
+      },
       {
         id: 7,
         title: 'Массажное кресло',
         price: '199.99',
         img: 'massage_kreslo.jpg',
+        category: 'chairs',
       },
-      { id: 8, title: 'Кровать', price: '109.99', img: 'krovat.jpg' },
-    ]);
+      {
+        id: 8,
+        title: 'Кровать',
+        price: '109.99',
+        img: 'krovat.jpg',
+        category: 'sofa',
+      },
+    ];
+    setItems(initialItems);
+    setCurItems(initialItems);
   }, []);
 
   const addToOrder = (item) => {
@@ -32,6 +56,15 @@ const App = () => {
     }
   };
 
+  const chooseCategory = (category) => {
+    setSelectedCategory(category);
+    if (category === 'all') {
+      setCurItems(items);
+      return;
+    }
+    setCurItems(items.filter((el) => el.category === category));
+  };
+
   const deleteOrder = (id) => {
     setOrders(orders.filter((el) => el.id !== id));
   };
@@ -39,7 +72,11 @@ const App = () => {
   return (
     <div className="wrapper">
       <Header orders={orders} onDelete={deleteOrder} />
-      <Items items={items} onAdd={addToOrder} />
+      <Categories
+        chooseCategory={chooseCategory}
+        selectedCategory={selectedCategory}
+      />
+      <Items items={curItems} onAdd={addToOrder} />
       <Footer />
     </div>
   );

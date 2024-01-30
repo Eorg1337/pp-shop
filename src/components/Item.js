@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Item({ item, onAdd }) {
+export default function Item({ item, onAdd, onShowModal }) {
   return (
     <div className="item">
-      <img src={`img/${item.img}`} />
+      <img src={`img/${item.img}`} onClick={() => onShowModal(item)} />
       <h2>{item.title}</h2>
       <b>{item.price}$</b>
       <div className="add_to_card" onClick={() => onAdd(item)}>

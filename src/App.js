@@ -3,12 +3,15 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Items from './components/Items';
 import Categories from './components/Categories';
+import MyModal from './components/MyModal';
 
 const App = () => {
   const [items, setItems] = useState();
   const [orders, setOrders] = useState([]);
   const [curItems, setCurItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [itemDesc, setItemDesc] = useState({});
   useEffect(() => {
     const initialItems = [
       {
@@ -65,6 +68,11 @@ const App = () => {
     setCurItems(items.filter((el) => el.category === category));
   };
 
+  const onShowModal = (item) => {
+    setItemDesc(item);
+    setShowModal(!showModal);
+  };
+
   const deleteOrder = (id) => {
     setOrders(orders.filter((el) => el.id !== id));
   };
@@ -76,7 +84,10 @@ const App = () => {
         chooseCategory={chooseCategory}
         selectedCategory={selectedCategory}
       />
-      <Items items={curItems} onAdd={addToOrder} />
+      <Items items={curItems} onAdd={addToOrder} onShowModal={onShowModal} />
+      {showModal && (
+        <MyModal item={itemDesc} onShowModal={onShowModal} onAdd={addToOrder} />
+      )}
       <Footer />
     </div>
   );

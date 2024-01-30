@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Item from './Item';
-const Items = ({ items, onAdd }) => {
+const Items = ({ items, onAdd, onShowModal }) => {
   if (!items || !items.length) {
     return null;
   }
@@ -9,7 +9,7 @@ const Items = ({ items, onAdd }) => {
   return (
     <main>
       {items.map((el) => (
-        <Item item={el} key={el.id} onAdd={onAdd} />
+        <Item item={el} key={el.id} onAdd={onAdd} onShowModal={onShowModal} />
       ))}
     </main>
   );
